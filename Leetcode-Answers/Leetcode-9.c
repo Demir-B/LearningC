@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main () {
 
@@ -25,7 +26,10 @@ int main () {
             xstrinv[i] = xstr[lenx - (i + 1)];
         }
 
-        if (xstr == xstrinv) {
+        // printf("%s\n", xstr);
+        // printf("%s\n", xstrinv);
+
+        if (strcmp(xstr, xstrinv) == 0) {
             printf("The number is a palidrome number.");
         }
 
@@ -36,6 +40,13 @@ int main () {
     }
 
     /*
+    28/07/2024
+    I managed to solve the problem using strcmp() function.
+    I could probably write this using nested loops to compare each
+    digit in the number x and its inverse but this function is most
+    likely more efficient than my planned approach. 
+
+    15/07/2024
     An attempt at solving the problem without the use of strings.
     If I get each digit and add it to the array arrx then it is
     smooth sailing from there but strings are a much simpler solution.
