@@ -16,6 +16,35 @@ struct node{
     node * next_node;
 };
 
+struct list{
+    node * first_element;
+    int length;
+}
+
+void add_element(list L, int value){
+    //Todo
+}
+
+node create_element(int value){
+    //Todo
+    //Hint: (You might need malloc ;)
+}
+
+void insert_element(int index, int value){
+    //Todo (indexing at 0)
+    //Hint: Think about edge cases.
+}
+
+void remove_element(int index){
+    //Todo
+}
+
+void print_list(list L){
+    //Todo
+}
+
+
+
 
 
 // struct {int x;int y;}   hello;
