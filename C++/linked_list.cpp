@@ -42,12 +42,34 @@ list add_element(list L, int value) {
     return L;
 }
 
-void insert_element(int index, int value) {
+list insert_element(list L, int index, int value) {
+    node* element;
+    element = create_element(value);
+    node* current_node = L.first_node; 
+    for (int i=0; i<index-1; i++) {
+        current_node = current_node -> next_node;
+    }
 
+    element -> next_node = current_node -> next_node;
+    current_node -> next_node = element;
+
+    L.length += 1;
+    return L;
 }
 
-void remove_element(int index) {
+list remove_element(list L, int index) {
+    node* current_node = L.first_node; 
+    for (int i=0; i<index-2; i++) {
+        current_node = current_node -> next_node;
+    }
 
+    node* element;
+    element = current_node -> next_node -> next_node;
+    free(current_node -> next_node);
+    current_node -> next_node = element;
+
+    L.length += 1;
+    return L;
 }
 
 void print_list(list L) {
@@ -74,6 +96,9 @@ int main() {
     list L = {0,nullptr};
     L = add_element(L, 5);
     L = add_element(L, 6);
+    L = insert_element(L, 1, 0);
+    print_list(L);
+    L = remove_element(L, 1);   //Not sure if I successfully free the memory yet.
     print_list(L);
     free_all(L);
     return 0;
