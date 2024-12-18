@@ -1,2 +1,6 @@
 *.exe
 .vscode
+C++/linked_list
+C++/linked_list.o
+C++/main.o
+C++/main

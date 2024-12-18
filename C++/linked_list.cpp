@@ -1,16 +1,8 @@
 #include <iostream>
+#include "linked_list.h" //need to include it here as well.
+
 
 using namespace std;
-
-struct node{
-    int value;
-    node* next_node;
-};
-
-struct list {
-    int length;
-    node* first_node;
-};
 
 node* create_element(int value) {
     node* element = (node*) malloc(sizeof(node));
@@ -68,7 +60,7 @@ list remove_element(list L, int index) {
     free(current_node -> next_node);
     current_node -> next_node = element;
 
-    L.length += 1;
+    L.length += 1; //todo
     return L;
 }
 
@@ -92,14 +84,39 @@ void free_all(list L) {
     }
 }
 
-int main() {
-    list L = {0,nullptr};
-    L = add_element(L, 5);
-    L = add_element(L, 6);
-    L = insert_element(L, 1, 0);
-    print_list(L);
-    L = remove_element(L, 1);   //Not sure if I successfully free the memory yet.
-    print_list(L);
-    free_all(L);
-    return 0;
-} 
+
+
+
+// int main() {
+//     list L = {0,nullptr};
+//     // print_list(L);
+//     // L = insert_element(L, 1, 0);
+//     // print_list(L);
+//     L = add_element(L, 5);
+//     print_list(L);
+//     L = add_element(L, 6);
+//     print_list(L);
+//     L = insert_element(L, 1, 0);
+//     print_list(L);
+//     L = remove_element(L, 1);   //Not sure if I successfully free the memory yet.
+//     print_list(L);
+//     // free_all(L);
+
+//     // list L2 = heap_sort(L);
+//     cout << "Hey there" << endl;
+//     return 0;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
