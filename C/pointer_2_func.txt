@@ -1,0 +1,14 @@
+#include <stdio.h>
+
+int (*comp)(void *, void *); //comp is a pointer to a function which has two void * arguments and the function returns an integer.
+int *comp(void *, void *); //comp is a function which has two void * arguments returning a pointer to an integer
+int *(*comp)(void *, void *);
+int *f(); //f is a function returning a pointer to an integer
+int (*pf)(); //pf is a pointer to function f, which returns an integer
+char **argv; //argv is a pointer to a pointer to char
+int (*daytab)[13]; //daytab is a pointer to array[13] of integers
+int *daytab[13]; //daytab is an array[13] of pointers to integers
+void *comp(); //comp is a function returning pointer to void
+void (*comp)(); //comp is a pointer to function returning void
+char (*(*x())[])(); //x is a function returning pointer to array[] of pointer to function returning char
+char (*(*x[3])())[5]; //x is an array[3] of pointer to function returning pointer to array[5] of char
