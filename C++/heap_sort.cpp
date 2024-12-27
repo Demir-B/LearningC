@@ -47,6 +47,9 @@ binary_tree add_node(binary_tree tree, int value) {
                 else {
                 current_node = current_node -> right_node;
                 }
+            }
+            else if (value = current_node -> value) {
+                return tree;
             }  
         }
     }
@@ -54,14 +57,16 @@ binary_tree add_node(binary_tree tree, int value) {
 }
 
 // Print the values in ascending order using inorder traversal
-void print_tree(tree_node* node) {
+void print_tree(tree_node* node, int* list, int i) {
     if (node == nullptr) {
         return;
     }
 
-    print_tree(node -> left_node);
+    print_tree(node -> left_node, list, i);
     cout << node -> value << " ";
-    print_tree(node -> right_node);
+    *(list + i) = node -> value; 
+    i += 1;
+    print_tree(node -> right_node, list, i);
 }
 
 // Frees all memory using post order traversal to get child nodes before parent
@@ -76,23 +81,29 @@ void free_all(tree_node* node) {
 }
 
 int main(void) {
+    int list[10] = {1,2,5,6,8,9,3,4,7,10};
     binary_tree tree1 = {nullptr};
 
-    tree1 = add_node(tree1, 1);
-    tree1 = add_node(tree1, 2);
-    tree1 = add_node(tree1, 5);
-    tree1 = add_node(tree1, 6);
-    tree1 = add_node(tree1, 8);
-    tree1 = add_node(tree1, 9);
-    tree1 = add_node(tree1, 3);
-    tree1 = add_node(tree1, 4);
-    tree1 = add_node(tree1, 7);
-    tree1 = add_node(tree1, 10);
+    int len = sizeof(list) / sizeof(list[0]);
+    for (int i = 0; i < len; i++) {
+        tree1 = add_node(tree1, list[i]);
+    }
 
-    print_tree(tree1.first_node);
-    
+    cout << list + 1 << endl;
+
+    // This prints the list in the desired order but we want the result as a list
+    print_tree(tree1.first_node, list, 0);
+    cout << endl;
+
+    for (int i = 0; i < len; i++) {
+        cout << list[i] << " ";
+    }
+    cout << endl;
+     
+
     free_all(tree1.first_node);
     tree1.first_node = nullptr;
+
     return 0;
 }
 // list heap_sort(list L){
