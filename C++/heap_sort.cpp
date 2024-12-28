@@ -57,16 +57,14 @@ binary_tree add_node(binary_tree tree, int value) {
 }
 
 // Print the values in ascending order using inorder traversal
-void print_tree(tree_node* node, int* list, int i) {
+void print_tree(tree_node* node) {
     if (node == nullptr) {
         return;
     }
 
-    print_tree(node -> left_node, list, i);
+    print_tree(node -> left_node);
     cout << node -> value << " ";
-    *(list + i) = node -> value; 
-    i += 1;
-    print_tree(node -> right_node, list, i);
+    print_tree(node -> right_node);
 }
 
 // Frees all memory using post order traversal to get child nodes before parent
@@ -80,32 +78,56 @@ void free_all(tree_node* node) {
     free(node);
 }
 
+int sort_list(tree_node* node, int* list, int i) {
+    if (node == nullptr) {
+        return i;
+    }
+
+    i = sort_list(node -> left_node, list, i);
+    *(list + i) = node -> value; 
+    i += 1;
+    i = sort_list(node -> right_node, list, i);
+
+    return i;
+}
+
 int main(void) {
     int list[10] = {1,2,5,6,8,9,3,4,7,10};
     binary_tree tree1 = {nullptr};
 
     int len = sizeof(list) / sizeof(list[0]);
-    for (int i = 0; i < len; i++) {
-        tree1 = add_node(tree1, list[i]);
-    }
 
-    cout << list + 1 << endl;
-
-    // This prints the list in the desired order but we want the result as a list
-    print_tree(tree1.first_node, list, 0);
-    cout << endl;
-
+    cout << "Unsorted list:" << endl;
     for (int i = 0; i < len; i++) {
         cout << list[i] << " ";
     }
     cout << endl;
-     
+
+    for (int i = 0; i < len; i++) {
+        tree1 = add_node(tree1, list[i]);
+    }
+
+    // This prints the list in the desired order but we want the result as a list
+    cout << "Using In order tree traversal:" << endl;
+    print_tree(tree1.first_node);
+    cout << endl;
+
+    sort_list(tree1.first_node, list, 0);
+
+    cout << "Sorted list:" << endl;
+    for (int i = 0; i < len; i++) {
+        cout << list[i] << " ";
+    }
+    cout << endl;
 
     free_all(tree1.first_node);
     tree1.first_node = nullptr;
 
     return 0;
 }
+
+//This is all the advice given to me prior to the creation of this program
+
 // list heap_sort(list L){
     // HINT: this algorithm will need recursion (two times)
     // Three things: 1. Datastructure (Binary Tree), 2. Insert algorithm, 3. Print Algorithm
@@ -136,11 +158,9 @@ int main(void) {
 // }
 
 
-
-
 // MORE HINTS:
-    // HINT3: print_tree(root){
-    //  if root.left => print_tree(root.left)
-    //  print(root.value)
-    //  if root.right => print_tree(root.right)
-    // }
+//     HINT3: print_tree(root){
+//      if root.left => print_tree(root.left)
+//      print(root.value)
+//      if root.right => print_tree(root.right)
+//     }
