@@ -49,14 +49,32 @@ list insert_element(list L, int index, int value) {
     node* element;
     element = create_element(value);
     node* current_node = L.first_node; 
-    for (int i=0; i<index-1; i++) {
-        current_node = current_node -> next_node;
+
+    if (index == 0) {
+        L.first_node = element;
+        element -> next_node = current_node;
+        current_node -> previous_node = element;
     }
 
-    element -> next_node = current_node -> next_node;
-    element -> previous_node = current_node;
-    current_node -> next_node = element;
-    (element -> next_node) -> previous_node = element;
+    else if (index == L.length) {
+        for (int i=0; i<index-1; i++) {
+            current_node = current_node -> next_node;
+        }
+        
+        current_node -> next_node = element;
+        element -> previous_node = current_node;
+    }
+
+    else {
+        for (int i=0; i<index-1; i++) {
+            current_node = current_node -> next_node;
+        }
+
+        (current_node -> next_node) -> previous_node = element;
+        element -> next_node = current_node -> next_node;
+        element -> previous_node = current_node;
+        current_node -> next_node = element;
+    }
 
     L.length += 1;
     return L;
@@ -64,15 +82,38 @@ list insert_element(list L, int index, int value) {
 
 list remove_element(list L, int index) {
     node* current_node = L.first_node; 
-    for (int i=0; i<index-2; i++) {
-        current_node = current_node -> next_node;
+
+    if (index == 0) {
+        node* element;
+        element = current_node -> next_node;
+        element -> previous_node = nullptr;
+        L.first_node = current_node -> next_node;
+        free(current_node);
     }
 
-    node* element;
-    element = current_node -> next_node -> next_node;
-    free(current_node -> next_node);
-    current_node -> next_node = element;
-    element -> previous_node = current_node;
+    else if (index == (L.length - 1)) {
+        for (int i=0; i<index; i++) {
+            current_node = current_node -> next_node;
+        }
+
+        node* element;
+        element = current_node -> previous_node;
+        element -> next_node = nullptr;
+        free(current_node);
+    }
+
+    else {
+        for (int i=0; i<index; i++) {
+            current_node = current_node -> next_node;
+        }
+
+        node* element;
+        element = current_node -> previous_node;
+        element -> next_node = current_node -> next_node;
+        element = current_node -> next_node;
+        element -> previous_node = current_node -> previous_node;
+        free(current_node);
+    }
 
     L.length -= 1;
     return L;
@@ -112,7 +153,11 @@ int main() {
     L = add_element(L, 3);
     print_list(L);
     cout << " " << endl;
-    L = remove_element(L, 3);   //Not sure if I successfully free the memory yet.
+    L = remove_element(L, 3);
+    print_list(L);
+    cout << " " << endl;
+    L = insert_element(L, 0, 100);
+    L = insert_element(L, 4, 4);
     print_list(L);
     free_all(L);
     return 0;
